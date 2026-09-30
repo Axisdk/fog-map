@@ -8,7 +8,7 @@ FogMap — an Angular 22 application built around `maplibre-gl` / `@maplibre/ngx
 
 ### Story / product vision
 
-Working title **"Explore the City"** ("Explore the city. Reveal your world."). The app turns real-world city walks into exploration of a map hidden under fog: the user's GPS track is recorded during a walk, and fog clears along the *actual path walked* (not a circle around the current position). Over time the revealed map becomes a personal record of the places a user has walked.
+Working title **"Explore the City"** ("Explore the city. Reveal your world."). The app turns real-world city walks into exploration of a map hidden under fog: the user's GPS track is recorded during a walk, and fog clears along the _actual path walked_ (not a circle around the current position). Over time the revealed map becomes a personal record of the places a user has walked.
 
 Key principles: exploration over competition (no leaderboards/scoring focus), progress tied to real walks, a personal map per user, privacy by default (routes/location not public without explicit action), and building the core "fog" mechanic first before adding social/game features.
 
@@ -24,8 +24,10 @@ Explicitly out of scope for now (V1/Future, not MVP): user profiles, a shared ma
 - `npm test` / `ng test` — run unit tests via the Vitest-based Angular unit-test builder.
   - To run a single test file, pass it through to Vitest, e.g. `ng test -- src/app/app.spec.ts`.
 - `ng generate component <name>` — scaffold a new component (defaults to SCSS styles, per `angular.json`).
+- `npm run lint` / `ng lint` — run ESLint (`@angular-eslint` flat config in `eslint.config.js`) over `src/**/*.ts` and `src/**/*.html`.
+- `npm run format` — format the whole project with Prettier; `npm run format:check` checks without writing.
 
-There is no configured lint script; `.prettierrc` (single quotes, 100-char width, Angular parser for `*.html`) governs formatting — format with `npx prettier --write <files>`.
+`.prettierrc` (single quotes, 100-char width, Angular parser for `*.html`) governs formatting; `eslint-config-prettier` disables ESLint stylistic rules that would conflict with it.
 
 ## Architecture notes
 
@@ -39,10 +41,12 @@ There is no configured lint script; `.prettierrc` (single quotes, 100-char width
 Installed: `@maplibre/ngx-maplibre-gl@22.1.0` wrapping `maplibre-gl@6.11.2`. Standalone components/directives, no NgModule needed for individual imports (`NgxMapLibreGLModule` exists as a convenience bundle).
 
 **Not yet wired up — required before any map will render:**
+
 - Import `maplibre-gl/dist/maplibre-gl.css` (add to `styles` in `angular.json`, or `@import` it in `src/styles.scss`).
 - maplibre-gl v6 is ESM-only and loads its web worker from a separate file at runtime; bundlers can't rewrite that URL. Copy `maplibre-gl-worker.mjs` and `maplibre-gl-shared.mjs` from `node_modules/maplibre-gl/dist` into `assets` in `angular.json`, then call `provideMaplibreWorker('maplibre-gl-worker.mjs')` (from `@maplibre/ngx-maplibre-gl/config`) in `app.config.ts`. Without this the worker 404s and **no tiles render** — see the package README for the exact `angular.json` snippet.
 
 **Building blocks relevant to the fog/exploration mechanic:**
+
 - `<mgl-map>` (`MapComponent`) — the map container; camera inputs (`zoom`, `center`, `pitch`, `bearing`) are plain numbers and support two-way binding (`[(zoom)]`).
 - `mglGeolocate` (`GeolocateControlDirective`) — current-location tracking/display.
 - `mgl-marker` (`MarkerComponent`) — render the user's current position.
