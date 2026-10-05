@@ -17,6 +17,7 @@
     "@angular/forms": "^22.2.0",
     "@angular/platform-browser": "^22.2.0",
     "@angular/router": "^22.2.0",
+    "@axisdk/axis-lib": "file:.yalc/@axisdk/axis-lib",
     "@maplibre/ngx-maplibre-gl": "^22.1.0",
     "maplibre-gl": "^6.11.2",
     "rxjs": "~7.8.0",

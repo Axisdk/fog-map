@@ -43,7 +43,7 @@ Installed: `@maplibre/ngx-maplibre-gl@22.1.0` wrapping `maplibre-gl@6.11.2`. Sta
 - maplibre-gl v6 is ESM-only and loads its web worker from a separate file at runtime; bundlers can't rewrite that URL. Copy `maplibre-gl-worker.mjs` and `maplibre-gl-shared.mjs` from `node_modules/maplibre-gl/dist` into `assets` in `angular.json`, then call `provideMaplibreWorker('maplibre-gl-worker.mjs')` (from `@maplibre/ngx-maplibre-gl/config`) in `app.config.ts`. Without this the worker 404s and **no tiles render** — see the package README for the exact `angular.json` snippet.
 
 **Building blocks relevant to the fog/exploration mechanic:**
-- `<mgl-map>` (`MapComponent`) — the map container; camera inputs (`zoom`, `center`, `pitch`, `bearing`) are plain numbers and support two-way binding (`[(zoom)]`).
+- `<mgl-map>` (`DashboardComponent`) — the map container; camera inputs (`zoom`, `center`, `pitch`, `bearing`) are plain numbers and support two-way binding (`[(zoom)]`).
 - `mglGeolocate` (`GeolocateControlDirective`) — current-location tracking/display.
 - `mgl-marker` (`MarkerComponent`) — render the user's current position.
 - `<mgl-control mglNavigation>` — zoom/compass controls.
