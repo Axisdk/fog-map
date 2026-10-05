@@ -47,7 +47,7 @@ Installed: `@maplibre/ngx-maplibre-gl@22.1.0` wrapping `maplibre-gl@6.11.2`. Sta
 
 **Building blocks relevant to the fog/exploration mechanic:**
 
-- `<mgl-map>` (`MapComponent`) — the map container; camera inputs (`zoom`, `center`, `pitch`, `bearing`) are plain numbers and support two-way binding (`[(zoom)]`).
+- `<mgl-map>` (`DashboardComponent`) — the map container; camera inputs (`zoom`, `center`, `pitch`, `bearing`) are plain numbers and support two-way binding (`[(zoom)]`).
 - `mglGeolocate` (`GeolocateControlDirective`) — current-location tracking/display.
 - `mgl-marker` (`MarkerComponent`) — render the user's current position.
 - `<mgl-control mglNavigation>` — zoom/compass controls.

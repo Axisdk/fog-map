@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { MapComponent } from '@maplibre/ngx-maplibre-gl';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',
-  imports: [MapComponent],
+  imports: [RouterOutlet],
 })
 export class App {}

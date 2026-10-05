@@ -1,0 +1,25 @@
+<div class="dashboard">
+  @let mapConfigValue = mapConfig.value();
+  @let mapConfigLoading = mapConfig.loading();
+
+  @let geolocationValue$ = geolocation.value();
+  @let geolocationLoading$ = geolocation.loading();
+  @if (!mapConfigLoading) {
+    <mgl-map
+      class="map"
+      [mapStyle]="mapConfigValue?.mapStyle"
+      [zoom]="9"
+      [center]="geolocationValue$?.coordinates?.value"
+    >
+      @if (geolocationValue$) {
+        <mgl-marker [scale]="2" [lngLat]="{ lng: geolocationValue$?.coordinates?.longitude, lat: geolocationValue$?.coordinates?.latitude }">
+          <div class="marker"></div>
+        </mgl-marker>
+      }
+    </mgl-map>
+  }
+  @if (geolocationLoading$ && !geolocationValue$) {
+    <div class="geolocation-loading">Определяем местоположение…</div>
+  }
+</div>
+
