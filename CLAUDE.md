@@ -49,7 +49,7 @@ Installed: `@maplibre/ngx-maplibre-gl@22.1.0` wrapping `maplibre-gl@6.11.2`. Sta
 
 - `<mgl-map>` (`DashboardComponent`) — the map container; camera inputs (`zoom`, `center`, `pitch`, `bearing`) are plain numbers and support two-way binding (`[(zoom)]`).
 - `mglGeolocate` (`GeolocateControlDirective`) — current-location tracking/display.
-- `mgl-marker` (`MarkerComponent`) — render the user's current position.
+- `mgl-marker` (`UserMarkerComponent`) — render the user's current position.
 - `<mgl-control mglNavigation>` — zoom/compass controls.
 - A `GeoJSONSourceComponent` + `LayerComponent` pair is the natural fit for the fog overlay itself (a polygon/mask layer that gets updated as territory is revealed) and for the recorded GPS route.
 

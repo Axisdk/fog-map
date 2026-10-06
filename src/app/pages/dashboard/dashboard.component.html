@@ -1,4 +1,6 @@
 <div class="dashboard">
+  <app-sidebar />
+
   @let mapConfigValue = mapConfig.value();
   @let mapConfigLoading = mapConfig.loading();
 
@@ -13,7 +15,7 @@
     >
       @if (geolocationValue$) {
         <mgl-marker [scale]="2" [lngLat]="{ lng: geolocationValue$?.coordinates?.longitude, lat: geolocationValue$?.coordinates?.latitude }">
-          <div class="marker"></div>
+          <app-user-marker />
         </mgl-marker>
       }
     </mgl-map>
