@@ -10,12 +10,20 @@ import { GeolocationService } from '../../modules/geolocation-module/services/ge
 import { GeolocationHelperService } from '../../modules/geolocation-module/services/geolocation-helper.service';
 import { GeolocationStore } from '../../modules/geolocation-module/services/geolocation-store.service';
 import { GeolocationInterface } from '../../modules/geolocation-module/interfaces/geolocation.interface';
+import { SidebarComponent } from '../../shared/components/sidebar/sidebar.component';
+import { UserMarkerComponent } from './common/user-marker/user-marker.component';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
-  imports: [MapComponent, MarkerComponent],
+  imports: [
+    MapComponent,
+    UserMarkerComponent,
+    SidebarComponent,
+    UserMarkerComponent,
+    MarkerComponent,
+  ],
   providers: [
     MapService,
     MapStoreService,
