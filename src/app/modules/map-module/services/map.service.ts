@@ -8,7 +8,7 @@ import { MapStoreService } from './map-store.service';
 export class MapService {
   private readonly _mapStoreService: MapStoreService = inject(MapStoreService);
 
-  public getMapConfig$(): Observable<MapConfigInterface> {
+  public initMapConfig$(): Observable<MapConfigInterface> {
     return of(mapConfigConst).pipe(
       tap({
         next: (response: MapConfigInterface): void => {

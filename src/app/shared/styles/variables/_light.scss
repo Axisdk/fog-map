@@ -2,10 +2,17 @@
   --color-text-500: #f1efef;
 
   --color-surface-100: #171710;
+  --color-surface-100-transparent: rgba(23, 23, 23, 0.4);
 
   --line-100: #e3dbdb;
   --line-200: #afaaaa;
+  --line-500: #3c3b3b;
 
   --line-positive: #285e25;
   --line-gray: rgb(110 105 105);
+
+  --blur-sm: 2px;
+  --blur-md: 4px;
+  --blur-lg: 6px;
+  --blur-xl: 8px;
 }
