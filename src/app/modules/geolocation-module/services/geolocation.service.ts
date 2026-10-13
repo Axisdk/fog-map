@@ -1,5 +1,5 @@
 import { inject, Service } from '@angular/core';
-import { Observable, Subscriber } from 'rxjs';
+import { Observable, Subscriber, tap } from 'rxjs';
 import { GeolocationInterface } from '../interfaces/geolocation.interface';
 import { GeolocationStore } from './geolocation-store.service';
 import { GeolocationHelperService } from './geolocation-helper.service';
@@ -24,6 +24,10 @@ export class GeolocationService {
           { timeout: 15000, maximumAge: 1000, enableHighAccuracy: true },
         );
       },
+    ).pipe(
+      tap((geolocation: GeolocationInterface): void => {
+        this._geolocationStore.geolocation$.next(geolocation);
+      }),
     );
   }
 
@@ -43,6 +47,10 @@ export class GeolocationService {
 
         return (): void => navigator.clearWatch(watchId);
       },
+    ).pipe(
+      tap((geolocation: GeolocationInterface): void => {
+        this._geolocationStore.geolocation$.next(geolocation);
+      }),
     );
   }
 }

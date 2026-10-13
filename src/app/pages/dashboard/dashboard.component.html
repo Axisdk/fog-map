@@ -1,27 +1,34 @@
 <div class="dashboard">
   <app-sidebar />
 
-  @let mapConfigValue = mapConfig.value();
-  @let mapConfigLoading = mapConfig.loading();
+  @let mapConfig$ = mapConfig();
+  @let geolocation$ = geolocation();
 
-  @let geolocationValue$ = geolocation.value();
-  @let geolocationLoading$ = geolocation.loading();
-  @if (!mapConfigLoading) {
+  @if (mapConfig$) {
     <mgl-map
       class="map"
-      [mapStyle]="mapConfigValue?.mapStyle"
-      [zoom]="9"
-      [center]="geolocationValue$?.coordinates?.value"
+      [mapStyle]="mapConfig$.mapStyle"
+      [zoom]="mapConfig$.zoom"
+      [fadeDuration]="mapConfig$.fadeDuration"
+      [center]="geolocation$?.coordinates?.value"
+      [hash]="mapConfig$.hash"
+      [rollEnabled]="mapConfig$.rollEnabled"
+      movingMethod="flyTo"
+
     >
-      @if (geolocationValue$) {
-        <mgl-marker [scale]="2" [lngLat]="{ lng: geolocationValue$?.coordinates?.longitude, lat: geolocationValue$?.coordinates?.latitude }">
+      @if (geolocation$) {
+        <mgl-marker [scale]="2" [lngLat]="{ lng: geolocation$?.coordinates?.longitude, lat: geolocation$?.coordinates?.latitude }">
           <app-user-marker />
         </mgl-marker>
       }
     </mgl-map>
   }
-  @if (geolocationLoading$ && !geolocationValue$) {
+  @if (!geolocation$) {
     <div class="geolocation-loading">Определяем местоположение…</div>
   }
+
+  <div class="controllers">
+    <app-zoom-controller [mapConfig]="mapConfig$" />
+  </div>
 </div>
 
