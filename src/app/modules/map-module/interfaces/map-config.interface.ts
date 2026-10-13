@@ -4,4 +4,5 @@ export interface MapConfigInterface {
   fadeDuration: number;
   hash: boolean;
   rollEnabled: boolean;
+  marker_following: boolean;
 }

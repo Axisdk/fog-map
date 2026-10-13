@@ -7,4 +7,5 @@ export const mapConfigConst: MapConfigInterface = {
   fadeDuration: 2000,
   hash: true,
   rollEnabled: false,
+  marker_following: true,
 };
