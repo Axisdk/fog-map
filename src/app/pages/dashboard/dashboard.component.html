@@ -16,6 +16,8 @@
       movingMethod="flyTo"
       (mapDragStart)="updateMapConfig({ marker_following: false })"
     >
+      <app-fog />
+
       @if (geolocation$) {
         <mgl-marker [scale]="2" [lngLat]="{ lng: geolocation$?.coordinates?.longitude, lat: geolocation$?.coordinates?.latitude }">
           <app-user-marker [geolocation]="geolocation$" />

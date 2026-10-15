@@ -18,12 +18,12 @@ import { GeolocationHelperService } from '../../modules/geolocation-module/servi
 import { GeolocationStore } from '../../modules/geolocation-module/services/geolocation-store.service';
 import { GeolocationInterface } from '../../modules/geolocation-module/interfaces/geolocation.interface';
 import { CoordinatesType } from '../../modules/geolocation-module/types/coordinates.type';
-import { SidebarComponent } from '../../shared/components/sidebar/sidebar.component';
 import { UserMarkerComponent } from './common/user-marker/user-marker.component';
 import { ZoomControllerComponent } from './common/zoom-controller/zoom-controller.component';
 import { MapHelperService } from '../../modules/map-module/services/map-helper.service';
 import { MarkerFollowComponent } from './common/marker-follow/marker-follow.component';
 import { UpdateMapConfigType } from '../../modules/map-module/types/update-map-config.type';
+import { FogComponent } from './common/fog/fog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,11 +32,11 @@ import { UpdateMapConfigType } from '../../modules/map-module/types/update-map-c
   imports: [
     MapComponent,
     UserMarkerComponent,
-    SidebarComponent,
     UserMarkerComponent,
     MarkerComponent,
     ZoomControllerComponent,
     MarkerFollowComponent,
+    FogComponent,
   ],
   providers: [
     MapService,
