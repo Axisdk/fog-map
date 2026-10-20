@@ -1,8 +1,7 @@
 @let user$ = user();
 @let userInitial$ = userInitial();
-@let geolocation$ = geolocation();
 
-<div [class]="markerClass()">
+<div class="marker">
   <div [class]="userClasses()">
     @if (user$?.avatar_url) {
       <img
@@ -13,6 +12,4 @@
       <div class="initial">{{ userInitial$ }}</div>
     }
   </div>
-
-  <div class="accuracy" [style]="{ '--accuracy': (calculateAccuracy(geolocation$?.accuracy) ?? 0) + 'px' }"></div>
 </div>

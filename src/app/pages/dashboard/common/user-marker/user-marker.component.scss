@@ -1,29 +1,6 @@
 .marker {
   position: relative;
 
-  --color-accuracy-status-line: transparent;
-  --color-accuracy-status-background: transparent;
-  --border-style-accuracy-status-line: none;
-  &-status {
-
-    &-good {
-      --color-accuracy-status-line: #21a839;
-      --color-accuracy-status-background: rgba(33, 168, 57, 0.3);
-      --border-style-accuracy-status-line: solid;
-    }
-
-    &-bad {
-      --color-accuracy-status-line: #b87136;
-      --color-accuracy-status-background: rgba(170, 111, 29, 0.3);
-      --border-style-accuracy-status-line: dotted;
-    }
-
-    &-none {
-      --color-accuracy-status-line: #434343;
-      --color-accuracy-status-background: transparent;
-    }
-  }
-
   .user {
     width: 40px;
     height: 40px;
@@ -67,45 +44,6 @@
       font-weight: bold;
       color: var(--color-text-500);
       background: var(--color-surface-100);
-    }
-  }
-
-  .accuracy {
-    --accuracy: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: var(--accuracy);
-    height: var(--accuracy);
-    border-radius: 50%;
-    border: 3px var(--border-style-accuracy-status-line) var(--color-accuracy-status-line);
-    pointer-events: none;
-    transition: var(--transition-default);
-    z-index: -1;
-
-    @keyframes accuracy-background-fill {
-      from {
-        width: 0;
-        height: 0;
-      }
-      to {
-        width: 110%;
-        height: 110%;
-      }
-    }
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 0;
-      height: 0;
-      border-radius: 50%;
-      background: var(--color-accuracy-status-background);
-      animation: accuracy-background-fill ease-in-out infinite 5s 1s;
     }
   }
 }

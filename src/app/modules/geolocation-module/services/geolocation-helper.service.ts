@@ -23,7 +23,7 @@ export class GeolocationHelperService {
         longitude: geolocation.longitude,
         value: [geolocation?.longitude, geolocation.latitude],
       },
-      accuracy: 20,
+      accuracy: geolocation.accuracy,
       accuracy_status: this._checkAccuracyStatus(geolocation.accuracy),
       speed: geolocation.speed ?? 0,
     };
