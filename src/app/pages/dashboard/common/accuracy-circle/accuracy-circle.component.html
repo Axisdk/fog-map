@@ -1,0 +1,25 @@
+@let accuracyGeoJson$ = accuracyGeoJson();
+@let style$ = style();
+
+@if (accuracyGeoJson$) {
+  <mgl-geojson-source id="accuracy-circle-source" [data]="accuracyGeoJson$"></mgl-geojson-source>
+
+  <mgl-layer
+    id="accuracy-circle-fill"
+    type="fill"
+    source="accuracy-circle-source"
+    [paint]="{ 'fill-color': style$.fillColor, 'fill-opacity': style$.fillOpacity }"
+  ></mgl-layer>
+
+  <mgl-layer
+    id="accuracy-circle-line"
+    type="line"
+    source="accuracy-circle-source"
+    [paint]="{
+      'line-color': style$.lineColor,
+      'line-opacity': style$.lineOpacity,
+      'line-width': 2,
+      'line-dasharray': style$.lineDasharray,
+    }"
+  ></mgl-layer>
+}

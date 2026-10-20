@@ -24,6 +24,7 @@ import { MapHelperService } from '../../modules/map-module/services/map-helper.s
 import { MarkerFollowComponent } from './common/marker-follow/marker-follow.component';
 import { UpdateMapConfigType } from '../../modules/map-module/types/update-map-config.type';
 import { FogComponent } from './common/fog/fog.component';
+import { AccuracyCircleComponent } from './common/accuracy-circle/accuracy-circle.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,11 +33,11 @@ import { FogComponent } from './common/fog/fog.component';
   imports: [
     MapComponent,
     UserMarkerComponent,
-    UserMarkerComponent,
     MarkerComponent,
     ZoomControllerComponent,
     MarkerFollowComponent,
     FogComponent,
+    AccuracyCircleComponent,
   ],
   providers: [
     MapService,

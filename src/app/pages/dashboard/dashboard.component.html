@@ -19,8 +19,10 @@
       <app-fog />
 
       @if (geolocation$) {
+        <app-accuracy-circle [geolocation]="geolocation$" />
+
         <mgl-marker [scale]="2" [lngLat]="{ lng: geolocation$?.coordinates?.longitude, lat: geolocation$?.coordinates?.latitude }">
-          <app-user-marker [geolocation]="geolocation$" />
+          <app-user-marker />
         </mgl-marker>
       }
     </mgl-map>
