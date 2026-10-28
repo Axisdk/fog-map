@@ -1,5 +1,6 @@
 import {
   Component,
+  computed,
   DestroyRef,
   effect,
   inject,
@@ -26,6 +27,8 @@ import { UpdateMapConfigType } from '../../modules/map-module/types/update-map-c
 import { FogComponent } from './common/fog/fog.component';
 import { AccuracyCircleComponent } from './common/accuracy-circle/accuracy-circle.component';
 import { TrackStorageService } from '../../modules/track-module/services/track-storage.service';
+
+const MARKER_ANIMATION_DURATION_MS = 200;
 
 @Component({
   selector: 'app-dashboard',
@@ -68,6 +71,28 @@ export class DashboardComponent implements OnInit {
   );
 
   protected mapCenter: WritableSignal<CoordinatesType | undefined> = signal(undefined);
+  protected markerPosition: WritableSignal<CoordinatesType | undefined> = signal(undefined);
+
+  protected animatedGeolocation: Signal<GeolocationInterface | null> = computed(
+    (): GeolocationInterface | null => {
+      const geolocation: GeolocationInterface | null = this.geolocation();
+      const position: CoordinatesType | undefined = this.markerPosition();
+      if (!geolocation || !position) return geolocation;
+
+      return {
+        ...geolocation,
+        coordinates: {
+          ...geolocation.coordinates,
+          value: position,
+          longitude: position[0],
+          latitude: position[1],
+        },
+      };
+    },
+  );
+
+  private _markerAnimationCurrent: CoordinatesType | undefined;
+  private _markerAnimationFrameId: number | null = null;
 
   constructor() {
     effect((): void => {
@@ -78,6 +103,56 @@ export class DashboardComponent implements OnInit {
         this.mapCenter.set(geolocation.coordinates.value);
       }
     });
+
+    effect((): void => {
+      this._animateMarkerTo(this.geolocation()?.coordinates.value);
+    });
+
+    this._destroyRef.onDestroy((): void => this._cancelMarkerAnimation());
+  }
+
+  private _cancelMarkerAnimation(): void {
+    if (this._markerAnimationFrameId === null) return;
+
+    cancelAnimationFrame(this._markerAnimationFrameId);
+    this._markerAnimationFrameId = null;
+  }
+
+  private _animateMarkerTo(target: CoordinatesType | undefined): void {
+    this._cancelMarkerAnimation();
+
+    if (!target) {
+      this._markerAnimationCurrent = undefined;
+      this.markerPosition.set(undefined);
+      return;
+    }
+
+    const from: CoordinatesType | undefined = this._markerAnimationCurrent;
+    if (!from) {
+      this._markerAnimationCurrent = target;
+      this.markerPosition.set(target);
+      return;
+    }
+
+    const start: number = performance.now();
+
+    const step = (now: number): void => {
+      const progress: number = Math.min((now - start) / MARKER_ANIMATION_DURATION_MS, 1);
+      const eased: number = 1 - Math.pow(1 - progress, 3);
+      const next: CoordinatesType = [
+        from[0] + (target[0] - from[0]) * eased,
+        from[1] + (target[1] - from[1]) * eased,
+      ];
+
+      this._markerAnimationCurrent = next;
+      this.markerPosition.set(next);
+
+      if (progress < 1) {
+        this._markerAnimationFrameId = requestAnimationFrame(step);
+      }
+    };
+
+    this._markerAnimationFrameId = requestAnimationFrame(step);
   }
 
   private _initMapConfig(): void {
