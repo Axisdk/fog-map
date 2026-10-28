@@ -25,6 +25,7 @@ import { MarkerFollowComponent } from './common/marker-follow/marker-follow.comp
 import { UpdateMapConfigType } from '../../modules/map-module/types/update-map-config.type';
 import { FogComponent } from './common/fog/fog.component';
 import { AccuracyCircleComponent } from './common/accuracy-circle/accuracy-circle.component';
+import { TrackStorageService } from '../../modules/track-module/services/track-storage.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -46,6 +47,7 @@ import { AccuracyCircleComponent } from './common/accuracy-circle/accuracy-circl
     GeolocationService,
     GeolocationHelperService,
     GeolocationStore,
+    TrackStorageService,
   ],
 })
 export class DashboardComponent implements OnInit {

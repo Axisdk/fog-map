@@ -9,6 +9,8 @@ import distance from '@turf/distance';
 import { featureCollection, point } from '@turf/helpers';
 import { GeolocationStore } from '../../../../modules/geolocation-module/services/geolocation-store.service';
 import { GeolocationInterface } from '../../../../modules/geolocation-module/interfaces/geolocation.interface';
+import { TrackStorageService } from '../../../../modules/track-module/services/track-storage.service';
+import { TrackPointInterface } from '../../../../modules/track-module/interfaces/track-point.interface';
 import {
   fogMinRevealDistanceMetersConst,
   fogRevealRadiusMetersConst,
@@ -23,6 +25,7 @@ import {
 })
 export class FogComponent {
   private readonly _geolocationStore: GeolocationStore = inject(GeolocationStore);
+  private readonly _trackStorageService: TrackStorageService = inject(TrackStorageService);
 
   private readonly _geolocation: Signal<GeolocationInterface | null> = toSignal(
     this._geolocationStore.geolocation$,
@@ -42,10 +45,51 @@ export class FogComponent {
   );
 
   constructor() {
+    void this._loadHistory();
+
     effect((): void => {
       const geolocation: GeolocationInterface | null = this._geolocation();
       if (geolocation) this._reveal(geolocation.coordinates.value);
     });
+  }
+
+  private async _loadHistory(): Promise<void> {
+    const points: TrackPointInterface[] = await this._trackStorageService.getAllPoints();
+
+    const circles: Feature<Polygon | MultiPolygon>[] = [];
+    let lastRevealedAt: [number, number] | null = null;
+
+    for (const { coordinates } of points) {
+      const [lng, lat] = coordinates;
+      if (
+        lastRevealedAt &&
+        distance(point(lastRevealedAt), point([lng, lat]), { units: 'meters' }) <
+          fogMinRevealDistanceMetersConst
+      ) {
+        continue;
+      }
+      lastRevealedAt = [lng, lat];
+
+      const circle: Feature<Polygon | MultiPolygon> | undefined = buffer(
+        point([lng, lat]),
+        fogRevealRadiusMetersConst,
+        { units: 'meters' },
+      );
+      if (circle) circles.push(circle);
+    }
+
+    if (circles.length === 0) return;
+
+    const history: Feature<Polygon | MultiPolygon> | null =
+      circles.length === 1 ? circles[0] : union(featureCollection(circles));
+    if (!history) return;
+
+    this._lastRevealedAt = lastRevealedAt;
+
+    const current: Feature<Polygon | MultiPolygon> | null = this._revealed();
+    this._revealed.set(
+      current ? (union(featureCollection([current, history])) ?? current) : history,
+    );
   }
 
   private _reveal([lng, lat]: [number, number]): void {
