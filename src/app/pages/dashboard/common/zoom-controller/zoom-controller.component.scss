@@ -28,5 +28,10 @@
     font-size: 24px;
     font-weight: 500;
     cursor: pointer;
+
+    &:disabled {
+      color: var(--color-text-300);
+      cursor: not-allowed;
+    }
   }
 }

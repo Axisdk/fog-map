@@ -13,6 +13,8 @@
   border-radius: 12px;
   border: 1px solid var(--line-500);
   cursor: pointer;
+  appearance: none;
+  font: inherit;
 
   &.active {
     &::before {

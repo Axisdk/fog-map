@@ -32,8 +32,8 @@
   }
 
   <div class="controllers">
-    <app-marker-follow [mapConfig]="mapConfig$" />
-    <app-zoom-controller [mapConfig]="mapConfig$" />
+    <app-marker-follow [markerFollowing]="mapConfig$?.marker_following ?? false" />
+    <app-zoom-controller [zoom]="mapConfig$?.zoom ?? 0" />
   </div>
 </div>
 

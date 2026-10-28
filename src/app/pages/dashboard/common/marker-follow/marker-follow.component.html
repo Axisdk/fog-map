@@ -1,1 +1,8 @@
-<div [class]="markerFollowingClass()" (click)="toggleMarkerFollow()"></div>
+<button
+  type="button"
+  class="marker-follow"
+  [class.active]="markerFollowing()"
+  [attr.aria-pressed]="markerFollowing()"
+  aria-label="Следовать за маркером"
+  (click)="toggleMarkerFollow()"
+></button>

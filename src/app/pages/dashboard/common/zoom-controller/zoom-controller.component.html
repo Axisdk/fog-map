@@ -1,5 +1,21 @@
 <div class="zoom-controller">
-  <button class="btn" (click)="updateZoom(true)">+</button>
+  <button
+    class="btn"
+    type="button"
+    aria-label="Приблизить"
+    [disabled]="isMaxZoom()"
+    (click)="updateZoom(1)"
+  >
+    +
+  </button>
   <div class="divider"></div>
-  <button class="btn" (click)="updateZoom(false)">-</button>
+  <button
+    class="btn"
+    type="button"
+    aria-label="Отдалить"
+    [disabled]="isMinZoom()"
+    (click)="updateZoom(-1)"
+  >
+    -
+  </button>
 </div>
